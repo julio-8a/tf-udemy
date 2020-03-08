@@ -26,7 +26,7 @@ resource "aws_instance" "demo2" {
     provisioner "file" {
     source      = "script.sh"
     destination = "/tmp/script.sh"
-}
+    }
 
     provisioner "remote-exec" {
         inline = [
@@ -40,6 +40,15 @@ resource "aws_instance" "demo2" {
         type        = "ssh"
         user        = var.INSTANCE_USERNAME
         private_key = file(var.PATH_TO_PRIVATE_KEY) 
-    }    
+    }
+
+    #demo 3 outputs
+    provisioner "local-exec" {
+        command = "echo ${aws_instance.demo2.private_ip} >> private_ips.txt"
+    }  
+}
+
+output "ip" {
+    value = aws_instance.demo2.public_ip
 }
 
