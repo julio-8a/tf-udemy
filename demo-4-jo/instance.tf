@@ -10,3 +10,12 @@ output "ip" {
   value = aws_instance.example.public_ip
 }
 
+terraform {
+  backend "s3" {
+    bucket         = "tf-udemy-jo-20200308"
+    key            = "gobal/demo4/terraform.tfstate"
+    region         = "us-east-2"
+    dynamodb_table = "tf-udemy-jo-state-locks"
+    encrypt      = true
+  }
+}
